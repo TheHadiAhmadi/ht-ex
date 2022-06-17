@@ -20,11 +20,10 @@ const getAttributes = (d) =>
 	}));
     
 const getBC = d => {
-    const features = Object.keys(d.BrowserCompatibility).filter(attr => attr !== d.tag);
+    const features = Object.keys(d.BrowserCompatibility);
     const browsers = Object.keys(d.BrowserCompatibility[d.tag].support);
     
     return [...browsers.map(b => {
-
         return features.map(feat => ({
             tag: d.tag,
             attribute: feat === d.tag ? null : feat,
@@ -38,9 +37,6 @@ const getBC = d => {
 
 import Minibase from './src/minibase-sdk.js'
 import fetch from 'node-fetch'
-
-const VITE_MB_APPNAME = 'html';
-const VITE_MB_APIKEY = '05eIVHILUZS3v8Fe8z2ub7rpR0npKfQQ';
 
 const minibase = new Minibase(VITE_MB_APPNAME, VITE_MB_APIKEY, {mode: 'online'});
 
@@ -66,16 +62,17 @@ const minibase = new Minibase(VITE_MB_APPNAME, VITE_MB_APIKEY, {mode: 'online'})
 // }))
 // console.log("upload finished");
 
+function sleep(time) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time)
+    })
+}
 
+console.log("uploading...")
+await Promise.all(data.map(getBC).flat(2).map(bc => {
+    return minibase.insert('bc', bc);
+}))
 
-// console.log("uploading...")
-// Promise.all(data.map(async d => {
-//     console.log('[ bc ] -> ' + d.tag);
-//     return getBC(d).flat(2).map(async bc => {
-//         console.log(`[ ${bc.browser} - ${bc.tag} - ${bc.attribute} ] -> ${bc.supports} `);
-//         return await minibase.insert('bc', bc);
-//     })
-// }))
-// console.log("upload finished");
+console.log("upload finished");
 
 // console.log(await minibase.get('tags'))
