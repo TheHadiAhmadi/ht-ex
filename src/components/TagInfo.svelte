@@ -1,5 +1,6 @@
 <script>
   import AttributesModal from "./AttributesModal.svelte";
+  import ExamplesModal from "./ExamplesModal.svelte";
   export let tag;
 </script>
 
@@ -14,6 +15,6 @@
     <AttributesModal {tag} />
   </td>
   <td class="p-4">
-    <button class="btn  btn-wide shadow-xl"> Examples </button>
+    <ExamplesModal {tag} />
   </td>
 </tr>
