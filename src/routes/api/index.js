@@ -14,7 +14,7 @@ export async function get({ params }) {
 			tag: tag.name,
 			description: tag.description,
 			attributes: attributes
-				.filter((attr) => attr.tag === tag)
+				.filter((attr) => attr.tag === tag.name)
 				.map((attr) => ({
 					id: attr.id,
 					name: attr.name,
