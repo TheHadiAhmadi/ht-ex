@@ -1,42 +1,37 @@
 <script>
   import { onMount } from "svelte";
-  // import rawData from '../data.json'
   import TagInfo from "./TagInfo.svelte";
 
   let data = [];
 
   onMount(async () => {
     // const result = JSON.parse(rawData)
-      console.log('fetching')
-    const response = await fetch(
-      "https://raw.githubusercontent.com/ESMAT001/utils101/master/data.json"
-    );
+    console.log("fetching");
+    const response = await fetch("http://localhost:3000/api");
     const result = await response.json();
-    console.log(result)
+    console.log(result);
     data = result;
   });
 </script>
 
-<div class="p-4">
-  <table class="w-full">
-    <thead>
-      <tr class="bg-green-400 text-white shadow-lg ">
-        <th class="p-3 font-light text-xl ">Tag</th>
-        <th class="p-3 font-light text-xl ">Description</th>
-        <th class="p-3 font-light text-xl"> Attributes </th>
-        <th class="p-3 font-light text-xl">Examples</th>
-      </tr>
-    </thead>
-    <tbody class="divide-y-2 divide-orange-500">
-      {#if data.length === 0}
-        <tr>
-          <td colspan="4" class="text-center">Loading</td>
+<div class="px-20">
+  {#if data.length === 0}
+   <div class="flex justify-center"> <button class="btn loading shadow-xl">loading</button></div>
+  {:else}
+    <table class="w-full">
+      <thead>
+        <tr class="bg-green-400 text-white shadow-lg ">
+          <th class="p-3 font-light text-xl ">Tag</th>
+          <th class="p-3 font-light text-xl ">Description</th>
+          <th class="p-3 font-light text-xl"> Attributes </th>
+          <th class="p-3 font-light text-xl">Examples</th>
         </tr>
-      {:else}
-        {#each data as tag (tag.tag+"101")}
+      </thead>
+      <tbody class="divide-y divide-green-400">
+        {#each data as tag (tag.id)}
           <TagInfo {tag} />
         {/each}
-      {/if}
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  {/if}
 </div>

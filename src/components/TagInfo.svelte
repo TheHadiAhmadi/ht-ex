@@ -1,26 +1,19 @@
 <script>
-    import AttributesTable from "./AttributesTable.svelte";
-    export let tag ;
+  import AttributesModal from "./AttributesModal.svelte";
+  export let tag;
 </script>
 
-<tr class="align-top">
-    <td class="text-center">
-        {tag.tag}
-    </td>
-    <td>
-        {tag?.description ?? 'No description'}
-    </td>
-    <!-- <td>
-        <AttributesTable attributes={tag.attributes?.localAttributes} />
-    </td> -->
-    <td>
-        <button>
-            Atrribute Details
-        </button>
-    </td>
-    <td>
-        <button>
-            Examples
-        </button>
-    </td>
+<tr class="hover:bg-gray-700 cursor-pointer transition-all duration-300">
+  <td class="text-center">
+    {tag.tag}
+  </td>
+  <td class="p-4">
+    {tag?.description ?? "No description"}
+  </td>
+  <td>
+    <AttributesModal {tag} />
+  </td>
+  <td class="p-4">
+    <button class="btn  btn-wide shadow-xl"> Examples </button>
+  </td>
 </tr>
