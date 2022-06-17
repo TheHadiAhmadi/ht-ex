@@ -29,6 +29,7 @@ export async function get({ params }) {
 			browsers: bc
 				.filter((b) => b.tag === tag.name)
 				.map((b) => ({
+                    attribute: b.attribute,
 					browser: b.browser,
 					supports: b.supports
 				}))
