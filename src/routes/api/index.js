@@ -8,6 +8,16 @@ export async function get({ params }) {
 		minibase.get('bc')
 	]);
 
+	let browsers = {};
+
+	bc.map((b) => {
+		const feature = b.attribute ? b.attribute : b.tag;
+
+		browsers[b.tag] ??= {};
+		browsers[b.tag][feature] ??= {};
+		browsers[b.tag][feature][b.browser] = b.supports;
+	});
+
 	return {
 		body: tags.map((tag) => ({
 			id: tag.id,
@@ -26,13 +36,7 @@ export async function get({ params }) {
 							content: ex.content
 						}))
 				})),
-			browsers: bc
-				.filter((b) => b.tag === tag.name)
-				.map((b) => ({
-                    attribute: b.attribute,
-					browser: b.browser,
-					supports: b.supports
-				}))
+			browsers: browsers[tag.name]
 		}))
 	};
 }
