@@ -1,4 +1,4 @@
-import minibase from '../../minibase';
+import minibase from '$lib/minibase';
 
 export async function get({ params }) {
 	const [tags, attributes, examples, bc] = await Promise.all([
