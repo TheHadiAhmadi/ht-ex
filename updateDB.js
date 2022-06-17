@@ -69,9 +69,7 @@ function sleep(time) {
 }
 
 console.log("uploading...")
-await Promise.all(data.map(getBC).flat(2).map(bc => {
-    return minibase.insert('bc', bc);
-}))
+await minibase.insert('bc', data.map(getBC).flat(2))
 
 console.log("upload finished");
 

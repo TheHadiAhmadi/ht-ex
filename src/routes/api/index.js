@@ -26,8 +26,8 @@ export async function get({ params }) {
 							content: ex.content
 						}))
 				})),
-			browserCompatability: bc
-				.filter((b) => b.tag === tag)
+			browsers: bc
+				.filter((b) => b.tag === tag.name)
 				.map((b) => ({
 					browser: b.browser,
 					supports: b.supports
