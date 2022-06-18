@@ -8,7 +8,7 @@
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id={id} class="modal-toggle" />
-<div class="modal">
+<div class="modal backdrop-filter backdrop-blur-sm">
   <div class="modal-box relative w-11/12 max-w-5xl">
     <label for={id} class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
     <slot></slot>

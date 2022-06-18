@@ -4,7 +4,7 @@
     import TagsTable from "../components/TagsTable.svelte";
 </script>
 
-<main data-theme="" class="font-raleway">
+<main data-theme="dark" class="font-raleway">
     <Header />
     <TagsTable />
 </main>
