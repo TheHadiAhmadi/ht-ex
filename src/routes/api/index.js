@@ -30,7 +30,7 @@ export async function get({ params }) {
 					name: attr.name,
 					description: attr.description,
 					examples: examples
-						.filter((ex) => ex.tag === tag && ex.attribute == attr.name)
+						.filter((ex) => ex.tag === tag.name && ex.attribute === attr.name)
 						.map((ex) => ({
 							id: ex.id,
 							content: ex.content
