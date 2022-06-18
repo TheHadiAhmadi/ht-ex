@@ -19,32 +19,34 @@ export async function get({ params }) {
 	});
 
 	return {
-		body: tags.map((tag) => ({
-			id: tag.id,
-			tag: tag.name,
-			description: tag.description,
-			attributes: [
-				{
-					name: tag.name,
-					examples: examples
-						.filter((ex) => ex.tag === tag.name && !ex.attribute)
-						.map((ex) => ({ id: ex.id, content: ex.content }))
-				},
-				...attributes
-					.filter((attr) => attr.tag === tag.name)
-					.map((attr) => ({
-						id: attr.id,
-						name: attr.name,
-						description: attr.description,
+		body: tags
+			.map((tag) => ({
+				id: tag.id,
+				tag: tag.name,
+				description: tag.description,
+				attributes: [
+					{
+						name: tag.name,
 						examples: examples
-							.filter((ex) => ex.tag === tag.name && ex.attribute === attr.name)
-							.map((ex) => ({
-								id: ex.id,
-								content: ex.content
-							}))
-					}))
-			],
-			browsers: browsers[tag.name]
-		}))
+							.filter((ex) => ex.tag === tag.name && !ex.attribute)
+							.map((ex) => ({ id: ex.id, content: ex.content }))
+					},
+					...attributes
+						.filter((attr) => attr.tag === tag.name)
+						.map((attr) => ({
+							id: attr.id,
+							name: attr.name,
+							description: attr.description,
+							examples: examples
+								.filter((ex) => ex.tag === tag.name && ex.attribute === attr.name)
+								.map((ex) => ({
+									id: ex.id,
+									content: ex.content
+								}))
+						}))
+				],
+				browsers: browsers[tag.name]
+			}))
+			.sort((a, b) => (a.tag.toLowerCase() > b.tag.toLowerCase() ? 1 : -1))
 	};
 }
