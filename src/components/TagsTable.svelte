@@ -7,7 +7,7 @@
   onMount(async () => {
     // const result = JSON.parse(rawData)
     console.log("fetching");
-    const response = await fetch("http://localhost:3000/api");
+    const response = await fetch(window.location.href+"api");
     const result = await response.json();
     console.log(result);
     data = result;
