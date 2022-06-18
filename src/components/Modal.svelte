@@ -2,10 +2,11 @@
   import uniqid from "uniqid";
   const id = uniqid();
   let show = false;
+  export let label = "open modal";
 </script>
 
 <!-- The button to open modal -->
-<label for={id} class="btn btn-wide modal-button">open modal</label>
+<label for={id} class="btn btn-wide modal-button">{label}</label>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" {id} class="modal-toggle" bind:checked={show} />

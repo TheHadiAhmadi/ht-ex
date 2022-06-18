@@ -23,7 +23,7 @@
   }
 </script>
 
-<Modal>
+<Modal label="examples">
   <div
     class={`flex flex-row h-96 overflow-hidden item-start ${
       attributes.length > 0 ? "justify-between" : "justify-evenly"

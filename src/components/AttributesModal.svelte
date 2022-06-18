@@ -5,10 +5,10 @@
   export let tag;
 </script>
 
-<Modal>
+<Modal label="Attributes Detail">
   <h3 class="text-lg font-bold">Attributes Info</h3>
   <div class="flex flex-col space-y-4 divide-y divide-gray-400">
     <AttributesTable attributes={tag.attributes} />
-    <!-- <BcdTable bcd={tag.browsers} /> -->
+    <BcdTable bcd={tag.browsers} />
   </div>
 </Modal>
