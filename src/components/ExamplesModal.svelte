@@ -1,71 +1,89 @@
 <script>
+  import { onMount } from "svelte";
   import Modal from "./Modal.svelte";
   import CodeEditor from "./CodeEditor.svelte";
   export let tag;
-  let activeAttribute = "";
-  let code = `<${tag.tag}></${tag.tag}>`;
-  function handleCodeChange(_code) {
-    code = _code;
+  let attributes = [];
+  let activeAttributeIndex = 0;
+  let activeExampleIndex = 0;
+
+  onMount(() => {
+    attributes = [
+      {
+        name: tag.tag,
+        examples: [{ content: `<${tag.tag}></${tag.tag}>` }],
+      },
+      ...tag.attributes,
+    ];
+  });
+
+  $: activeAttribute = attributes[activeAttributeIndex]?.name;
+  $: code =
+    attributes[activeAttributeIndex]?.examples[activeExampleIndex]?.content;
+  $: examples = attributes[activeAttributeIndex]?.examples;
+
+  function handleAttributesClick(i) {
+    activeAttributeIndex = i;
+    activeExampleIndex = 0;
+    examples = attributes[i].examples;
   }
-  tag.examples = [
-    {
-      attribute: "href",
-      code: `
-      <a href=\"#\">
-        <slot></slot>
-      </a>
-    `,
-    },
-    {
-      attribute: "href",
-      code: `
-      <a href=\"#\">
-        <slot></slot>
-      </a>
-    `,
-    },
-  ];
 </script>
 
 <Modal>
-  <h3 class="text-lg font-bold">Examples</h3>
   <div
-    class={`flex flex-row h-96 overflow-hidden ${
-      tag.attributes.length > 0 ? "justify-between" : "justify-evenly"
+    class={`flex flex-row h-96 overflow-hidden item-start ${
+      attributes.length > 0 ? "justify-between" : "justify-evenly"
     }`}
   >
-    <!-- {JSON.stringify(tag)} -->
-    {#if tag.attributes.length > 0}
-      <ul class="flex flex-col items-center px-4 overflow-y-scroll w-2/12">
-        {#each tag.attributes as attribute (attribute.name)}
+    {#if attributes.length > 0}
+      <ul class="flex flex-col items-center px-4 overflow-y-scroll w-3/12">
+        <h3 class="text-center pt-2">Attributes</h3>
+        {#each attributes as attribute, i (attribute.name)}
           <li class="w-full text-center py-3">
             <button
-              class={`btn w-full ${
+              on:click={() => handleAttributesClick(i)}
+              class={`btn w-full text-xs ${
                 activeAttribute === attribute.name ? "btn-primary" : ""
               }`}
-              on:click={() => {
-                activeAttribute = attribute.name;
-              }}
             >
               {attribute.name}
             </button>
           </li>
         {/each}
       </ul>
-    {/if}
-    
-      <CodeEditor examples={tag.examples} {code} {handleCodeChange} />
-    <div class=" overflow-hidden rounded-xl w-4/12">
-      <h3 class="text-center pt-2">Result</h3>
-      <div class="p-4">
-        <iframe
-          width="100%"
-          srcdoc={code}
-          src="https://bing.com/"
-          class="w-full h-80 bg-white rounded-xl"
-          title="example"
-        />
+      <div class="w-5/12  space-y-6 px-5 pb-2 overflow-y-scroll">
+        <h3 class="text-center pt-2">Examples</h3>
+        {#if examples.length > 0}
+          {#each examples as example, i}
+            <CodeEditor
+              {example}
+              on:codeEditorFocused={(e) => (activeExampleIndex = i)}
+              on:codeEditorChanged={(e) => {
+                console.log("changed");
+                examples[activeExampleIndex].content = e.detail;
+                code = e.detail;
+              }}
+            />
+          {/each}
+        {:else}
+          <p class="text-center">No examples</p>
+        {/if}
       </div>
-    </div>
+
+      <div class=" overflow-hidden rounded-xl w-4/12">
+        <h3 class="text-center pt-2">Result</h3>
+        <div class="p-4">
+          <iframe
+            width="100%"
+            srcdoc={code}
+            src="https://bing.com/"
+            class="w-full h-80 bg-white rounded-xl"
+            title="example"
+          />
+        </div>
+      </div>
+    {:else}
+      no code
+    {/if}
   </div>
 </Modal>
