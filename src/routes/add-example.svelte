@@ -21,7 +21,6 @@
     .filter((attribute) => !attribute.examples.length)
     .map((attribute) => attribute.name);
   async function fetchData() {
-    loading = true;
     console.log("loading tags");
     const response = await fetch(window.location.origin + "/api");
     const result = await response.json();
@@ -41,7 +40,6 @@
       .map((tag) => tag.tag);
     console.log(tagsWithoutExamples);
     loading = false;
-    code = "";
   }
   onMount(fetchData);
 
@@ -55,7 +53,9 @@
         content,
       }),
     }).then((res) => res.json());
+    alert("Tda Saved!!");
     fetchData();
+    code = "";
     console.log(resp);
   }
 </script>
@@ -120,16 +120,14 @@
             : attributeDes}
         </div>
 
-        <label required class="form-control">
-          <span class="label-text">content:</span>
-          <textarea
-            required
-            placeholder="write code here"
-            class="textarea textarea-bordered"
-            name="content"
-            bind:value={code}
-          />
-        </label>
+        <textarea
+          required
+          placeholder="write code here"
+          class="textarea textarea-bordered"
+          name="content"
+          bind:value={code}
+        />
+
         <iframe
           srcdoc={code}
           src="https://bing.com/"
