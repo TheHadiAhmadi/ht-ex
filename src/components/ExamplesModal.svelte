@@ -1,5 +1,6 @@
 <script>
   import Modal from "./Modal.svelte";
+  import CodeEditor from "./CodeEditor.svelte";
   export let tag;
 </script>
 
@@ -17,10 +18,10 @@
       {/each}
     </ul>
     <ul width="w-6/12">
-      <li>hi</li>
+      <CodeEditor />
     </ul>
     <div class="border-2 rounded border-green-500 w-4/12">
-        <h3 class="text-center p-2">Result</h3>
+      <h3 class="text-center p-2">Result</h3>
     </div>
   </div>
 </Modal>
