@@ -4,4 +4,4 @@
     export {className as class};
 </script>
 
-<textarea bind:value {className}/>
+<pre contenteditable bind:textContent={value} class="mockup-code {className}"/>
