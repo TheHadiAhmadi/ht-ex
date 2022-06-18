@@ -20,6 +20,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tailwindcss/forms": "^0.5.2",
 		"svelte-preprocess": "^4.10.7",
 		"uniqid": "^5.4.0",
 		"uuid": "^8.3.2"

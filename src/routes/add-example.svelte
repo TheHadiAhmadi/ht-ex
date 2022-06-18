@@ -41,6 +41,7 @@
       .map((tag) => tag.tag);
     console.log(tagsWithoutExamples);
     loading = false;
+    code = "";
   }
   onMount(fetchData);
 
@@ -64,12 +65,12 @@
     <div class="btn loading shadow-xl">Loading...</div>
   {:else}
     <form
-      class="card border border-primary m-4 text-black w-full"
+      class="card border-4 border-success shadow-lg shadow-green-500/50 m-4 text-black w-full"
       on:submit|preventDefault={onSubmit}
     >
       <div class="card-body">
         <h2 class="card-title text-white">Add Example 👀</h2>
-        <select name="tag" class="form-control" bind:value={selectedTag}>
+        <select name="tag" class="bg-transparent" bind:value={selectedTag}>
           <option value="" disabled selected hidden> select tag 👀 </option>
           {#each tags as tag, i (tag.id)}
             <option
