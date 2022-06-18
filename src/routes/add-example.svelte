@@ -13,7 +13,8 @@
   $: attributesWithoutExamples = attributes
     .filter((attribute) => !attribute.examples.length)
     .map((attribute) => attribute.name);
-  onMount(async () => {
+  async function fetchData() {
+    loading = true;
     console.log("loading tags");
     const response = await fetch(window.location.origin + "/api");
     const result = await response.json();
@@ -33,9 +34,10 @@
       .map((tag) => tag.tag);
     console.log(tagsWithoutExamples);
     loading = false;
-  });
+  }
+  onMount(fetchData);
 
-  async function onSubmit({ target }) {
+  async function onSubmit() {
     const tag = tags[parseInt(selectedTag)].tag;
     const attr = selectedAttribute;
     const content = code;
@@ -45,6 +47,7 @@
         content,
       }),
     }).then((res) => res.json());
+    fetchData();
     console.log(resp);
   }
 </script>
@@ -59,9 +62,6 @@
     >
       <div class="card-body">
         <h2 class="card-title">Add Example</h2>
-        {selectedTag}
-        {selectedAttribute}
-        {attributesWithoutExamples.join(", ")}
         <select name="tag" class="form-control" bind:value={selectedTag}>
           {#each tags as tag, i (tag.id)}
             <option
