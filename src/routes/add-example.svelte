@@ -13,12 +13,13 @@
     const response = await fetch(window.location.origin + "/api");
     const result = await response.json();
     tags = result;
+    console.log(tags);
     console.log("loaded");
   });
 
   async function onSubmit({ target }) {
-    const tag = target.tag.value;
-    const attr = target.attr.value;
+    const tag = tags[parseInt(selectedTag)].tag;
+    const attr = attributes[parseInt(selectedAttribute)].name;
     const content = target.content.value;
     const resp = await fetch(`/api/${tag}/${attr}/examples`, {
       method: "POST",
