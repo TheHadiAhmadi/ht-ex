@@ -23,19 +23,27 @@ export async function get({ params }) {
 			id: tag.id,
 			tag: tag.name,
 			description: tag.description,
-			attributes: attributes
-				.filter((attr) => attr.tag === tag.name)
-				.map((attr) => ({
-					id: attr.id,
-					name: attr.name,
-					description: attr.description,
+			attributes: [
+				{
+					name: tag.name,
 					examples: examples
-						.filter((ex) => ex.tag === tag.name && ex.attribute === attr.name)
-						.map((ex) => ({
-							id: ex.id,
-							content: ex.content
-						}))
-				})),
+						.filter((ex) => ex.tag === tag.name && !ex.attribute)
+						.map((ex) => ({ id: ex.id, content: ex.content }))
+				},
+				...attributes
+					.filter((attr) => attr.tag === tag.name)
+					.map((attr) => ({
+						id: attr.id,
+						name: attr.name,
+						description: attr.description,
+						examples: examples
+							.filter((ex) => ex.tag === tag.name && ex.attribute === attr.name)
+							.map((ex) => ({
+								id: ex.id,
+								content: ex.content
+							}))
+					}))
+			],
 			browsers: browsers[tag.name]
 		}))
 	};
