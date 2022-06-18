@@ -11,10 +11,9 @@
   <td class="p-4">
     {tag?.description ?? "No description"}
   </td>
-  <td>
+  <td class="space-y-2 p-3">
     <AttributesModal {tag} />
-  </td>
-  <td class="p-4">
     <ExamplesModal {tag} />
   </td>
+
 </tr>

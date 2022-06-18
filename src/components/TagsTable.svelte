@@ -31,7 +31,7 @@
     <div class="flex justify-center items-center pb-3">
       <input
       type="search"
-      class="p-2 bg-transparent focus:outline-none border-2 border-green-400 rounded-lg"
+      class="py-2 px-3 bg-transparent focus:outline-none border-2 border-green-400 rounded-lg"
       placeholder="search tag"
       bind:value={searchText}
     />
@@ -42,7 +42,6 @@
           <th class="p-3 font-light text-xl ">Tag</th>
           <th class="p-3 font-light text-xl ">Description</th>
           <th class="p-3 font-light text-xl"> Attributes </th>
-          <th class="p-3 font-light text-xl">Examples</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-green-400">
