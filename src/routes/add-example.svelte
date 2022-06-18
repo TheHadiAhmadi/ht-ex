@@ -65,7 +65,7 @@
     <div class="btn loading shadow-xl">Loading...</div>
   {:else}
     <form
-      class="card bg-neutral text-neutral-content shadow-xl m-4 text-black w-9/12 md:w-6/12"
+      class="card bg-neutral text-neutral-content shadow-xl m-4 w-9/12 md:w-6/12"
       on:submit|preventDefault={onSubmit}
     >
       <div class="card-body">
