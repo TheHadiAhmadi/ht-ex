@@ -19,8 +19,8 @@
 
   async function onSubmit({ target }) {
     const tag = tags[parseInt(selectedTag)].tag;
-    const attr = attributes[parseInt(selectedAttribute)].name;
-    const content = target.content.value;
+    const attr = selectedAttribute;
+    const content = code;
     const resp = await fetch(`/api/${tag}/${attr}/examples`, {
       method: "POST",
       body: JSON.stringify({

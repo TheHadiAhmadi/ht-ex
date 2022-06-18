@@ -15,15 +15,19 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-green-400">
-      {#each attributes as attribute}
-        <tr class="hover:bg-gray-700 cursor-pointer transition-all duration-300">
-          <td class="text-center p-2">
-            {attribute.name}
-          </td>
-          <td class="p-2">
-            {@html attribute.description}
-          </td>
-        </tr>
+      {#each attributes as attribute, i (attribute.name + "_table" + i)}
+        {#if i > 0}
+          <tr
+            class="hover:bg-gray-700 cursor-pointer transition-all duration-300"
+          >
+            <td class="text-center p-2">
+              {attribute.name}
+            </td>
+            <td class="p-2">
+              {@html attribute.description}
+            </td>
+          </tr>
+        {/if}
       {/each}
     </tbody>
   </table>

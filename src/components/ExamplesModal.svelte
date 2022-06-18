@@ -8,13 +8,7 @@
   let activeExampleIndex = 0;
 
   onMount(() => {
-    attributes = [
-      {
-        name: tag.tag,
-        examples: [{ content: `<${tag.tag}></${tag.tag}>` }],
-      },
-      ...tag.attributes,
-    ];
+    attributes = tag.attributes;
   });
 
   $: activeAttribute = attributes[activeAttributeIndex]?.name;
@@ -38,7 +32,7 @@
     {#if attributes.length > 0}
       <ul class="flex flex-col items-center px-4 overflow-y-scroll w-3/12">
         <h3 class="text-center pt-2">Attributes</h3>
-        {#each attributes as attribute, i (attribute.name)}
+        {#each attributes as attribute, i (attribute.name + i)}
           <li class="w-full text-center py-3">
             <button
               on:click={() => handleAttributesClick(i)}
@@ -54,7 +48,7 @@
       <div class="w-5/12  space-y-6 px-5 pb-2 overflow-y-scroll">
         <h3 class="text-center pt-2">Examples</h3>
         {#if examples.length > 0}
-          {#each examples as example, i}
+          {#each examples as example, i (example.id)}
             <CodeEditor
               {example}
               on:codeEditorFocused={(e) => (activeExampleIndex = i)}
