@@ -9,6 +9,13 @@
   $: attributes =
     selectedTag !== null ? tags[parseInt(selectedTag)]?.attributes : [];
 
+  $: attributeDes =
+    selectedAttribute !== null
+      ? tags[parseInt(selectedTag)]?.attributes.filter(
+          (a) => a.name === selectedAttribute
+        )[0]?.description
+      : "";
+
   let tagsWithoutExamples = [];
   $: attributesWithoutExamples = attributes
     .filter((attribute) => !attribute.examples.length)
@@ -94,6 +101,9 @@
             </option>
           {/each}
         </select>
+        <div class="text-white">
+          {@html attributeDes}
+        </div>
 
         <label required class="form-control">
           <span class="label-text">content:</span>
