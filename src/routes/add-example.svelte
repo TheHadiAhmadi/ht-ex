@@ -115,7 +115,7 @@
           {/each}
         </select>
         <div class="text-sm">
-          {@html attributeDes === undefined
+          {attributeDes === undefined
             ? tags[parseInt(selectedTag)].description
             : attributeDes}
         </div>
