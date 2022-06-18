@@ -60,17 +60,21 @@
   }
 </script>
 
-<div class="w-screen h-screen flex justify-center items-center">
+<div class="w-screen min-h-screen flex justify-center items-center">
   {#if loading}
     <div class="btn loading shadow-xl">Loading...</div>
   {:else}
     <form
-      class="card border-4 border-success shadow-lg shadow-green-500/50 m-4 text-black w-full"
+      class="card bg-neutral text-neutral-content shadow-xl m-4 text-black w-9/12 md:w-6/12"
       on:submit|preventDefault={onSubmit}
     >
       <div class="card-body">
-        <h2 class="card-title text-white">Add Example 👀</h2>
-        <select name="tag" class="bg-transparent" bind:value={selectedTag}>
+        <h2 class="card-title">Add Example 👀</h2>
+        <select
+          name="tag"
+          class="select select-bordered w-full text-gray-200"
+          bind:value={selectedTag}
+        >
           <option value="" disabled selected hidden> select tag 👀 </option>
           {#each tags as tag, i (tag.id)}
             <option
@@ -88,7 +92,11 @@
           {/each}
         </select>
 
-        <select name="attr" class=" text-black" bind:value={selectedAttribute}>
+        <select
+          name="attr"
+          class="select select-bordered w-full  text-gray-200"
+          bind:value={selectedAttribute}
+        >
           <option value="" disabled selected hidden>
             select attribute 👀
           </option>
@@ -106,8 +114,10 @@
             </option>
           {/each}
         </select>
-        <div class="text-white">
-          {@html attributeDes}
+        <div class="text-sm">
+          {@html attributeDes === undefined
+            ? tags[parseInt(selectedTag)].description
+            : attributeDes}
         </div>
 
         <label required class="form-control">
@@ -128,7 +138,7 @@
           title="coed"
           class="border-2 border-green-200 bg-white"
         />
-        <button class="btn" type="submit">Submit</button>
+        <button class="btn btn-accent" type="submit">Submit</button>
       </div>
     </form>
   {/if}
