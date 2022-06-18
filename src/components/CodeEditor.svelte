@@ -1,8 +1,9 @@
-<!-- <script>
-  import { VerticalRepl } from "svelte-simple-repl";
 
-  const hello_world_component =
-    '<scrip>const name = "world";</scrit><h1> Hello, {name}!</h1>';
+<script>
+    export let value;
+    let className;
+    export {className as class};
 </script>
 
-<VerticalRepl value={hello_world_component} /> -->
+<pre contenteditable bind:textContent={value} class="mockup-code {className}"/>
+
