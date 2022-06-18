@@ -28,7 +28,7 @@ export async function get({ params }) {
 					{
 						name: tag.name,
 						examples: examples
-							.filter((ex) => ex.tag === tag.name && !ex.attribute)
+							.filter((ex) => ex.tag === tag.name && (!ex.attribute || ex.attribute === tag.name))
 							.map((ex) => ({ id: ex.id, content: ex.content }))
 					},
 					...attributes
