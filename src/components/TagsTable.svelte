@@ -7,17 +7,35 @@
   onMount(async () => {
     // const result = JSON.parse(rawData)
     console.log("fetching");
-    const response = await fetch(window.location.href+"api");
+    const response = await fetch(window.location.href + "api");
     const result = await response.json();
     console.log(result);
     data = result;
   });
+
+  let searchText = "";
+  $: filteredData =
+    searchText === ""
+      ? data
+      : data.filter((tag) => {
+          return tag.tag.toLowerCase().includes(searchText.toLowerCase());
+        });
 </script>
 
 <div class="px-20">
   {#if data.length === 0}
-   <div class="flex justify-center"> <button class="btn loading shadow-xl">loading</button></div>
+    <div class="flex justify-center">
+      <button class="btn loading shadow-xl">loading</button>
+    </div>
   {:else}
+    <div class="flex justify-center items-center pb-3">
+      <input
+      type="search"
+      class="p-2 bg-transparent focus:outline-none border-2 border-green-400 rounded-lg"
+      placeholder="search tag"
+      bind:value={searchText}
+    />
+    </div>
     <table class="w-full">
       <thead>
         <tr class="bg-green-400 text-white shadow-lg ">
@@ -28,7 +46,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-green-400">
-        {#each data as tag (tag.id)}
+        {#each filteredData as tag (tag.id)}
           <TagInfo {tag} />
         {/each}
       </tbody>

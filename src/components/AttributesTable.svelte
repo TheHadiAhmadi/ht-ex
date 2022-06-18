@@ -2,7 +2,7 @@
   export let attributes;
 </script>
 
-{#if attributes.length === 0}
+{#if attributes.length <= 1}
   <div class="p-4">
     <h3>No Attributes</h3>
   </div>
