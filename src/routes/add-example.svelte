@@ -6,6 +6,7 @@
   let selectedAttribute = null;
   let code = "";
   let loading = true;
+  let loaded = false;
   $: attributes =
     selectedTag !== null ? tags[parseInt(selectedTag)]?.attributes : [];
 
@@ -41,6 +42,7 @@
       .map((tag) => tag.tag);
     console.log(tagsWithoutExamples);
     loading = false;
+	  loaded = true;
     code = "";
   }
   onMount(fetchData);
@@ -61,7 +63,7 @@
 </script>
 
 <div class="w-screen min-h-screen flex justify-center items-center">
-  {#if loading}
+  {#if !loaded}
     <div class="btn loading shadow-xl">Loading...</div>
   {:else}
     <form
