@@ -69,7 +69,12 @@
               class={tagsWithoutExamples.includes(tag.tag)
                 ? "bg-red-400"
                 : "bg-green-400"}
-              >{tag.tag}
+            >
+              {tag.tag}
+
+              {tagsWithoutExamples.includes(tag.tag)
+                ? " (missing examples)"
+                : " (examples complete)"}
             </option>
           {/each}
         </select>
@@ -80,8 +85,13 @@
               value={attr.name}
               class={attributesWithoutExamples.includes(attr.name)
                 ? "bg-red-400"
-                : "bg-green-400"}>{attr.name}</option
+                : "bg-green-400"}
             >
+              {attr.name}
+              {attributesWithoutExamples.includes(attr.name)
+                ? " (missing examples)"
+                : " (examples complete)"}
+            </option>
           {/each}
         </select>
 
