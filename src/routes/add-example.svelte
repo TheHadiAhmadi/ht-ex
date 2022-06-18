@@ -68,8 +68,9 @@
       on:submit|preventDefault={onSubmit}
     >
       <div class="card-body">
-        <h2 class="card-title">Add Example</h2>
+        <h2 class="card-title text-white">Add Example 👀</h2>
         <select name="tag" class="form-control" bind:value={selectedTag}>
+          <option value="" disabled selected hidden> select tag 👀 </option>
           {#each tags as tag, i (tag.id)}
             <option
               value={`${i}`}
@@ -80,13 +81,16 @@
               {tag.tag}
 
               {tagsWithoutExamples.includes(tag.tag)
-                ? " (missing examples)"
-                : " (examples complete)"}
+                ? " (missing examples 👀)"
+                : " (examples complete 😃)"}
             </option>
           {/each}
         </select>
 
-        <select name="attr" class="form-control" bind:value={selectedAttribute}>
+        <select name="attr" class=" text-black" bind:value={selectedAttribute}>
+          <option value="" disabled selected hidden>
+            select attribute 👀
+          </option>
           {#each attributes as attr (attr.id)}
             <option
               value={attr.name}
@@ -96,8 +100,8 @@
             >
               {attr.name}
               {attributesWithoutExamples.includes(attr.name)
-                ? " (missing examples)"
-                : " (examples complete)"}
+                ? " (missing examples 👀)"
+                : " (examples complete 😃)"}
             </option>
           {/each}
         </select>
@@ -109,6 +113,7 @@
           <span class="label-text">content:</span>
           <textarea
             required
+            placeholder="write code here"
             class="textarea textarea-bordered"
             name="content"
             bind:value={code}
