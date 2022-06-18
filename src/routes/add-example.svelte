@@ -5,9 +5,14 @@
   let selectedTag = null;
   let selectedAttribute = null;
   let code = "";
+  let loading = true;
   $: attributes =
     selectedTag !== null ? tags[parseInt(selectedTag)]?.attributes : [];
 
+  let tagsWithoutExamples = [];
+  $: attributesWithoutExamples = attributes
+    .filter((attribute) => !attribute.examples.length)
+    .map((attribute) => attribute.name);
   onMount(async () => {
     console.log("loading tags");
     const response = await fetch(window.location.origin + "/api");
@@ -15,6 +20,19 @@
     tags = result;
     console.log(tags);
     console.log("loaded");
+    tagsWithoutExamples = tags
+      .filter((tag) => {
+        let haveExamples = true;
+        tag.attributes.forEach((attribute) => {
+          if (attribute.examples.length == 0) {
+            haveExamples = false;
+          }
+        });
+        return !haveExamples;
+      })
+      .map((tag) => tag.tag);
+    console.log(tagsWithoutExamples);
+    loading = false;
   });
 
   async function onSubmit({ target }) {
@@ -31,43 +49,61 @@
   }
 </script>
 
-<form
-  class="card border border-primary m-4"
-  on:submit|preventDefault={onSubmit}
->
-  <div class="card-body">
-    <h2 class="card-title">Add Example</h2>
-    {selectedTag}
-    {selectedAttribute}
-    <select name="tag" class="form-control" bind:value={selectedTag}>
-      {#each tags as tag, i (tag.id)}
-        <option value={`${i}`}>{tag.tag}</option>
-      {/each}
-    </select>
+<div class="w-screen h-screen flex justify-center items-center">
+  {#if loading}
+    <div class="btn loading shadow-xl">Loading...</div>
+  {:else}
+    <form
+      class="card border border-primary m-4 text-black w-full"
+      on:submit|preventDefault={onSubmit}
+    >
+      <div class="card-body">
+        <h2 class="card-title">Add Example</h2>
+        {selectedTag}
+        {selectedAttribute}
+        {attributesWithoutExamples.join(", ")}
+        <select name="tag" class="form-control" bind:value={selectedTag}>
+          {#each tags as tag, i (tag.id)}
+            <option
+              value={`${i}`}
+              class={tagsWithoutExamples.includes(tag.tag)
+                ? "bg-red-400"
+                : "bg-green-400"}
+              >{tag.tag}
+            </option>
+          {/each}
+        </select>
 
-    <select name="attr" class="form-control" bind:value={selectedAttribute}>
-      {#each attributes as attr (attr.id)}
-        <option value={attr.name}>{attr.name}</option>
-      {/each}
-    </select>
+        <select name="attr" class="form-control" bind:value={selectedAttribute}>
+          {#each attributes as attr (attr.id)}
+            <option
+              value={attr.name}
+              class={attributesWithoutExamples.includes(attr.name)
+                ? "bg-red-400"
+                : "bg-green-400"}>{attr.name}</option
+            >
+          {/each}
+        </select>
 
-    <label required class="form-control">
-      <span class="label-text">content:</span>
-      <textarea
-        required
-        class="textarea textarea-bordered"
-        name="content"
-        bind:value={code}
-      />
-    </label>
-    <iframe
-      srcdoc={code}
-      src="https://bing.com/"
-      width="100%"
-      height="200"
-      title="coed"
-      class="border-2 border-green-200 bg-white"
-    />
-    <button class="btn" type="submit">Submit</button>
-  </div>
-</form>
+        <label required class="form-control">
+          <span class="label-text">content:</span>
+          <textarea
+            required
+            class="textarea textarea-bordered"
+            name="content"
+            bind:value={code}
+          />
+        </label>
+        <iframe
+          srcdoc={code}
+          src="https://bing.com/"
+          width="100%"
+          height="200"
+          title="coed"
+          class="border-2 border-green-200 bg-white"
+        />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+  {/if}
+</div>
