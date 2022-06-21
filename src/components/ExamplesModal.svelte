@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import Modal from "./Modal.svelte";
   import CodeEditor from "./CodeEditor.svelte";
+  import Badge from "./Badge.svelte";
   export let tag;
   let attributes = [];
   let activeAttributeIndex = 0;
@@ -36,10 +37,11 @@
           <li class="w-full text-center py-3">
             <button
               on:click={() => handleAttributesClick(i)}
-              class={`btn w-full text-xs ${
+              class={`btn w-full text-xs relative ${
                 activeAttribute === attribute.name ? "btn-primary" : ""
               }`}
             >
+              <Badge number={attribute.examples.length} />
               {attribute.name}
             </button>
           </li>
